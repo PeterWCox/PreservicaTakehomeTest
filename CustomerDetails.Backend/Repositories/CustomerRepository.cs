@@ -4,31 +4,19 @@ using TodoApi.Models;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly CustomerContext _context;
+    public CustomerRepository(CustomerContext context) => _context = context;
 
-    public CustomerRepository(CustomerContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<List<Customer>> GetCustomers()
-    {
-        try
-        {
-            if (_context.Customers == null) return new List<Customer>();
-            return await _context.Customers.ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
-
-    public async Task<Customer?> GetCustomer(long id)
+    public async Task<Customer?> GetCustomer(int id)
     {
         try
         {
             Customer? customer = await _context.Customers.FindAsync(id);
-            if (customer == null) return null;
+
+            if (customer == null)
+            {
+                return null;
+            }
+
             return customer;
         }
         catch (Exception ex)
@@ -37,7 +25,20 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public async Task<Customer> PostCustomer(Customer customer)
+    public async Task<List<Customer>?> GetCustomers()
+    {
+        try
+        {
+            return await _context.Customers.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+
+    public async Task<Customer?> CreateCustomer(Customer customer)
     {
         try
         {
@@ -51,37 +52,46 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public async Task<Customer?> PutCustomer(long id, Customer customer)
+    public async Task<Customer?> UpdateCustomer(int id, Customer customer)
     {
+        if (id != customer.Id)
+        {
+            return null;
+        }
+
+        _context.Entry(customer).State = EntityState.Modified;
+
         try
         {
-            _context.Entry(customer).State = EntityState.Modified;
-            if (_context.Customers == null) return null;
-            var updatedCustomer = await _context.Customers.FindAsync(id);
-            return updatedCustomer;
+            await _context.SaveChangesAsync();
         }
-        catch (Exception ex)
+        catch (DbUpdateConcurrencyException)
         {
-            throw new Exception(ex.Message);
+            if (!customer(id))
+            {
+                return null;
+            }
+            else
+            {
+                throw;
+            }
         }
+
     }
 
-    public async Task<Customer?> DeleteCustomer(long id)
+    public async Task<Customer?> DeleteCustomer(int id)
     {
-        try
-        {
-            if (_context.Customers == null) return null;
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null) return null;
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+        Customer? customer = await _context.Customers.FindAsync(id);
 
-            return customer;
-        }
-        catch (Exception ex)
+        if (customer == null)
         {
-            throw new Exception(ex.Message);
+            return null;
         }
+
+        _context.Customers.Remove(customer);
+        await _context.SaveChangesAsync();
+
+        return customer;
     }
 
 }

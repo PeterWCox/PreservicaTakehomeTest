@@ -1,8 +1,8 @@
 public interface ICustomerService
 {
-    Task<Customer?> GetCustomer(long id);
+    Task<Customer> GetCustomer(int id);
     Task<List<Customer>> GetCustomers();
-    Task<Customer> PostCustomer(Customer customer);
-    Task<Customer?> PutCustomer(long id, Customer customer);
-    Task<Customer?> DeleteCustomer(long id);
+    Task<Customer> CreateCustomer(Customer customer);
+    Task<Customer> UpdateCustomer(int id, Customer customer);
+    Task<Customer> DeleteCustomer(int id);
 }
