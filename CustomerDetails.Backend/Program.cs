@@ -3,12 +3,15 @@ using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//ASP.NET Boilerplate
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//Customer Domain-specific boiler-plate
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 builder.Services.AddDbContext<TodoContext>(opt =>
     opt.UseInMemoryDatabase("TodoList"));
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
