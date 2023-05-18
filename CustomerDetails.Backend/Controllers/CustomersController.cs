@@ -6,18 +6,18 @@ namespace CustomerDetails.Backend.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerRepository _repository;
+        private readonly ICustomerService _service;
 
-        public CustomersController(ICustomerRepository repository)
+        public CustomersController(ICustomerService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         // GET: api/Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            var Customers = await _repository.GetCustomers();
+            var Customers = await _service.GetCustomers();
             if (Customers == null) return NotFound();
             return Customers;
         }
@@ -26,7 +26,7 @@ namespace CustomerDetails.Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(long id)
         {
-            var Customer = await _repository.GetCustomer(id);
+            var Customer = await _service.GetCustomer(id);
             if (Customer == null) return NotFound();
             return Customer;
         }
@@ -38,7 +38,7 @@ namespace CustomerDetails.Backend.Controllers
         {
             if (Customer == null) return BadRequest();
             if (id != Customer.Id) return BadRequest();
-            var updatedCustomer = await _repository.GetCustomer(id);
+            var updatedCustomer = await _service.GetCustomer(id);
             if (updatedCustomer == null) return NotFound();
             return NoContent();
         }
@@ -47,7 +47,7 @@ namespace CustomerDetails.Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer Customer)
         {
-            var newCustomer = await _repository.PostCustomer(Customer);
+            var newCustomer = await _service.PostCustomer(Customer);
             if (newCustomer == null) return NotFound();
             return CreatedAtAction(nameof(GetCustomer), new { id = newCustomer.Id }, newCustomer);
         }
@@ -56,7 +56,7 @@ namespace CustomerDetails.Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(long id)
         {
-            var deletedCustomer = await _repository.DeleteCustomer(id);
+            var deletedCustomer = await _service.DeleteCustomer(id);
             if (deletedCustomer == null) return NotFound();
             return NoContent();
         }

@@ -3,18 +3,14 @@ using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//ASP.NET Boilerplate
+// ASP.NET Boilerplate
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//To-do Domain-specific boiler-plate
-builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-builder.Services.AddDbContext<TodoContext>(opt =>
-    opt.UseInMemoryDatabase("TodoList"));
-
-//Customer Domain-specific boiler-plate
+// Customer Domain-specific boiler-plate
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddDbContext<CustomerContext>(opt =>
     opt.UseInMemoryDatabase("Customer"));
 
