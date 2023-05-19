@@ -5,30 +5,21 @@
   justify-content: space-evenly;
 }
 
-.lhs {
+.col {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.rhs {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.rhs p {
-  width: 70ch;
+  align-items: flex-start;
+  width: 33%;
 }
 
 @media (max-width: 1200px) {
   .aboutContainer {
     flex-direction: column;
   }
-  .lhs {
+  .col {
     width: 100%;
   }
-  .rhs {
-    width: 100%;
+  .col p {
+    max-width: 70ch;
   }
 }
