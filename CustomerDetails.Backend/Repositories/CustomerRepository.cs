@@ -29,7 +29,13 @@ public class CustomerRepository : ICustomerRepository
     {
         try
         {
-            return await _context.Customers.ToListAsync();
+            var customers = await _context.Customers.ToListAsync();
+            if (customers == null)
+            {
+                return null;
+            }
+            //Otherwise return the list of customers sorted A-Z by name
+            return customers.OrderBy(c => c.Name).ToList();
         }
         catch (Exception ex)
         {

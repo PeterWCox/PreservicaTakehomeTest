@@ -1,6 +1,6 @@
 import { Persona, PersonaSize } from "@fluentui/react";
 import { Customer } from "../../models/Customer";
-import "./Customer.css";
+import "./CustomerCard.css";
 
 export interface ICustomerCardProps {
   customer: Customer;

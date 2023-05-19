@@ -1,5 +1,4 @@
 using FluentValidation;
-using System.Text.RegularExpressions;
 
 public class CustomerValidator : AbstractValidator<Customer>
 {
@@ -10,7 +9,6 @@ public class CustomerValidator : AbstractValidator<Customer>
         //Name
         RuleFor(x => x.Name)
             .NotEmpty()
-            .Matches("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled)
             .WithMessage("Invalid fullname format");
 
         //Email
@@ -22,7 +20,6 @@ public class CustomerValidator : AbstractValidator<Customer>
         //PhoneNumber
         RuleFor(x => x.PhoneNumber)
             .NotEmpty()
-            .Matches("^[0-9]*$", RegexOptions.Compiled)
             .WithMessage("Invalid phone number format");
 
         //ProfilePhoto

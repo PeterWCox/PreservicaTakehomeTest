@@ -5,9 +5,9 @@ import { faker } from "@faker-js/faker";
 export interface ICustomerRepository {
   getCustomerById(id: number): Promise<Customer>;
   getCustomers(): Promise<Customer[]>;
-  createCustomer(customer: PartialCustomer): Promise<Customer>;
-  updateCustomer(id: number, customer: PartialCustomer): Promise<Customer>;
-  deleteCustomer(id: number): Promise<Customer>;
+  createCustomer(customer: PartialCustomer): Promise<void>;
+  updateCustomer(id: number, customer: PartialCustomer): Promise<void>;
+  deleteCustomer(id: number): Promise<void>;
   createFakeCustomers(count: number): Promise<void>;
 }
 
@@ -24,30 +24,19 @@ export class CustomerRepository implements ICustomerRepository {
     return response.data as Customer[];
   }
 
-  public async createCustomer(customer: PartialCustomer): Promise<Customer> {
-    const response = await axios.post(
-      `https://localhost:7142/api/Customers`,
-      customer
-    );
-    return response.data as Customer;
+  public async createCustomer(customer: PartialCustomer): Promise<void> {
+    await axios.post(`https://localhost:7142/api/Customers`, customer);
   }
 
   public async updateCustomer(
     id: number,
     customer: PartialCustomer
-  ): Promise<Customer> {
-    const response = await axios.put(
-      `https://localhost:7142/api/Customers/${id}`,
-      customer
-    );
-    return response.data as Customer;
+  ): Promise<void> {
+    await axios.put(`https://localhost:7142/api/Customers/${id}`, customer);
   }
 
-  public async deleteCustomer(id: number): Promise<Customer> {
-    const response = await axios.delete(
-      `https://localhost:7142/api/Customers/${id}`
-    );
-    return response.data as Customer;
+  public async deleteCustomer(id: number): Promise<void> {
+    await axios.delete(`https://localhost:7142/api/Customers/${id}`);
   }
 
   public async createFakeCustomers(count: number): Promise<void> {

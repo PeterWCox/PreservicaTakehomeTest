@@ -8,15 +8,15 @@ import {
 import { Customer, PartialCustomer } from "../models/Customer";
 import { useState } from "react";
 import { Text } from "@fluentui/react/lib/Text";
-import { useMutation } from "@tanstack/react-query";
 import { CustomerUtils } from "../utils/CustomerUtils";
 import "./CustomerEditModal.css";
-import { CustomerRepository } from "../repositories/CustomerRepository";
 
 export interface ICustomerEditModalProps {
   customer: Customer;
   isModalOpen: boolean;
   onDismiss: () => void;
+  onUpdate: (id: number, customer: PartialCustomer) => void;
+  onDelete: (id: number) => void;
 }
 
 export const CustomerEditModal = (props: ICustomerEditModalProps) => {
@@ -26,18 +26,6 @@ export const CustomerEditModal = (props: ICustomerEditModalProps) => {
     email: props.customer.email,
     phoneNumber: props.customer.phoneNumber,
     profilePhoto: props.customer.profilePhoto,
-  });
-
-  // Mutations;
-  const mutation = useMutation({
-    mutationFn: async (customer: PartialCustomer) => {
-      const repo = new CustomerRepository();
-      const updatedCustomer = await repo.updateCustomer(
-        props.customer.id,
-        customer
-      );
-      return updatedCustomer;
-    },
   });
 
   return (
@@ -134,15 +122,22 @@ export const CustomerEditModal = (props: ICustomerEditModalProps) => {
           />
 
           <div className="buttonContainer">
+            {/* Save Button */}
             <PrimaryButton
               text="Save"
-              onClick={() => {
-                mutation.mutate(updatedCustomer);
-                props.onDismiss();
-              }}
+              onClick={() => props.onUpdate(props.customer.id, updatedCustomer)}
               disabled={CustomerUtils.isCustomerValid(updatedCustomer)}
             />
+            {/* Cancel Button */}
             <DefaultButton text="Cancel" onClick={props.onDismiss} />
+          </div>
+
+          {/* Delete Button */}
+          <div className="buttonContainer">
+            <PrimaryButton
+              text="Delete"
+              onClick={() => props.onDelete(props.customer.id)}
+            />
           </div>
         </form>
       </div>
