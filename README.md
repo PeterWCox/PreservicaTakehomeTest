@@ -1,8 +1,6 @@
 # Perspective - Full Stack Developer Technical Exercise
 
-## Developer Peter Cox
-
-<!-- Add 'demo.png' in MD format -->
+## Developer: Peter Cox
 
 ![Demo](demo.png)
 
