@@ -5,7 +5,7 @@ import {
   PrimaryButton,
   TextField,
 } from "@fluentui/react";
-import { Customer, PartialCustomer } from "../models/Customer";
+import { Customer } from "../models/Customer";
 import { useState } from "react";
 import { Text } from "@fluentui/react/lib/Text";
 import { CustomerUtils } from "../utils/CustomerUtils";
@@ -15,13 +15,14 @@ export interface ICustomerEditModalProps {
   customer: Customer;
   isModalOpen: boolean;
   onDismiss: () => void;
-  onUpdate: (id: number, customer: PartialCustomer) => void;
+  onUpdate: (id: number, customer: Customer) => void;
   onDelete: (id: number) => void;
 }
 
 export const CustomerEditModal = (props: ICustomerEditModalProps) => {
   //States
-  const [updatedCustomer, setUpdatedCustomer] = useState<PartialCustomer>({
+  const [updatedCustomer, setUpdatedCustomer] = useState<Customer>({
+    id: props.customer.id,
     name: props.customer.name,
     email: props.customer.email,
     phoneNumber: props.customer.phoneNumber,
@@ -34,7 +35,7 @@ export const CustomerEditModal = (props: ICustomerEditModalProps) => {
       onDismiss={props.onDismiss}
       isBlocking={false}
     >
-      <div className="container">
+      <div className="modalContainer">
         <div className="header">
           <Text variant="large">Edit details</Text>
           <IconButton
@@ -96,7 +97,9 @@ export const CustomerEditModal = (props: ICustomerEditModalProps) => {
               })
             }
             errorMessage={
-              CustomerUtils.isEmailValid(updatedCustomer?.phoneNumber ?? "")
+              CustomerUtils.isPhoneNumberValid(
+                updatedCustomer?.phoneNumber ?? ""
+              )
                 ? undefined
                 : "Please enter a valid phone number"
             }
@@ -126,7 +129,7 @@ export const CustomerEditModal = (props: ICustomerEditModalProps) => {
             <PrimaryButton
               text="Save"
               onClick={() => props.onUpdate(props.customer.id, updatedCustomer)}
-              disabled={CustomerUtils.isCustomerValid(updatedCustomer)}
+              disabled={!CustomerUtils.isCustomerValid(updatedCustomer)}
             />
             {/* Cancel Button */}
             <DefaultButton text="Cancel" onClick={props.onDismiss} />

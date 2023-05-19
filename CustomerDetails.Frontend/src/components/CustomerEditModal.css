@@ -1,8 +1,8 @@
-.container {
+.modalContainer {
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-  gap: 1.5rem;
+  gap: 0.5rem;
 }
 
 .header {
@@ -11,17 +11,17 @@
   display: flex;
   align-items: center;
   font-weight: 500;
-  padding: "12px 12px 14px 24px";
+  padding: 0.75rem 0.75rem 0.75rem 1.5rem;
 }
 
 .body {
   flex: "4 4 auto";
-  padding: "0 24px 24px 24px";
+  padding: 0 1.5rem 1.5rem 1.5rem;
   overflow-y: hidden;
 }
 
 .buttonContainer {
   display: flex;
   justify-content: space-around;
-  padding: 24px 24px 24px 24px;
+  padding: 0.5rem;
 }

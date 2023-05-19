@@ -10,6 +10,7 @@ import { CustomerCard } from "./CustomerCard/CustomerCard";
 import { CustomerCardShimmer } from "./CustomerCard/CustomerCardShimmer";
 import { CustomerEditModal } from "./CustomerEditModal";
 import "./CustomersApp.css";
+import { About } from "./About/About";
 
 export const CustomersApp = () => {
   //Constants
@@ -109,10 +110,8 @@ export const CustomersApp = () => {
     <>
       <div className="container">
         {/* Heading */}
-        <Text variant="xxLarge">Customers</Text>
-
-        {/* Subheading */}
-        <div className="subheading">
+        <div className="headingContainer">
+          <Text variant="xxLarge">Customers</Text>
           <PrimaryButton
             onClick={() => createFakeCustomers()}
             style={{
@@ -121,6 +120,7 @@ export const CustomersApp = () => {
           >
             Add 10 Sample Customers
           </PrimaryButton>
+          <Text variant="large">Click a Persona to edit details!</Text>
         </div>
 
         {/* Customers */}
@@ -157,6 +157,9 @@ export const CustomersApp = () => {
             />
           </div>
         ) : null}
+
+        {/* About */}
+        <About />
       </div>
 
       {/* Edit Modal */}
