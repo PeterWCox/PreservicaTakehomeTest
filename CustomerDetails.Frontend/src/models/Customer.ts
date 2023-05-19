@@ -5,3 +5,5 @@ export interface Customer {
   email: string;
   profilePhoto: string;
 }
+
+export type PartialCustomer = Omit<Customer, "id">;

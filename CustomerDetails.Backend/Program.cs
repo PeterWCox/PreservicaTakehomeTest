@@ -23,8 +23,12 @@ if (builder.Environment.IsDevelopment())
     {
         options.AddDefaultPolicy(builder =>
         {
-            builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+            builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         });
+
     });
 }
 

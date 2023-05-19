@@ -54,44 +54,50 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<Customer?> UpdateCustomer(int id, Customer customer)
     {
-        if (id != customer.Id)
-        {
-            return null;
-        }
-
-        _context.Entry(customer).State = EntityState.Modified;
-
         try
         {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!customer(id))
+            Console.WriteLine("id: " + id);
+            Console.WriteLine("customer.Id: " + customer.Id);
+
+            if (id != customer.Id)
             {
+                Console.WriteLine("Id mismatch");
                 return null;
             }
-            else
-            {
-                throw;
-            }
-        }
 
+            _context.Entry(customer).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return customer;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public async Task<Customer?> DeleteCustomer(int id)
     {
-        Customer? customer = await _context.Customers.FindAsync(id);
-
-        if (customer == null)
+        try
         {
-            return null;
+            Customer? customer = await _context.Customers.FindAsync(id);
+
+            if (customer == null)
+            {
+                return null;
+            }
+
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
+
+            return customer;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
         }
 
-        _context.Customers.Remove(customer);
-        await _context.SaveChangesAsync();
 
-        return customer;
     }
 
 }
