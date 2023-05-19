@@ -1,6 +1,10 @@
 # Fullstack ASP.NET Core + ReactJS + FluentUI Example - By Peter Cox 💥
 
-This project makes uses of NextJs, Optimizely Fullstack and the JS SDK.
+## Introduction
+
+This project makes uses of an ASP.NET Core WebAPI backend, ReactJS front-end and the FluentUI UX framework for styling.
+
+It enables the user to view a list of customers, add new customers, edit existing customers and delete customers.
 
 ![Demo](demo.png)
 
@@ -27,17 +31,20 @@ This project makes uses of NextJs, Optimizely Fullstack and the JS SDK.
 <a href="https://www.typescriptlang.org/" rel="nofollow"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40" style="max-width: 100%;"> </a>
 
 </div>
-# How to run the project
 
-1. Clone the project from https://github.com/PeterWCox/PreservicaTakehomeTest
-2. Open up 'CustomerDetails.Backend' in VSC
-3. Press Ctrl+F5 to run the WebAPI
-4. Visit https://localhost:7142/**swagger**/index.html to view the API
-   and check it is functional
-5. Open up 'CustomerDetails.Frontend' in **VSC**
-6. Run "npm i" to install the dependencies
-7. Run "npm run dev" to run the frontend
-8. Visit "http://localhost:5173/" to view the frontend
+## How To Use ☄️
 
-Any questions please ring or e-mail me using the details supplied on my CV.
-csharp css3 cypress gatsby html5 jasmine javascript jest mocha nextjs nodejs react svelte typescript webpack
+First, clone the project and open both the 'CustomerDetails.Backend' and 'CustomerDetails.Frontend' folders in Visual Studio Code.
+
+In the 'CustomerDetails.Backend' VSC instance in the integrated terminal:
+
+```bash
+dotnet run
+```
+
+In the 'CustomerDetails.Frontend' VSC instance in the integrated terminal:
+
+```bash
+npm install
+npm run dev
+```
